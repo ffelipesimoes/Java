@@ -2,7 +2,7 @@ package noobChain;
 
 import java.security.PublicKey;
 
-public class TransactionOutput {
+public class TransactionOutputs {
 	public String id;
 	//also known as the new owner of these coins.
 	public PublicKey reciepient; 
@@ -11,7 +11,7 @@ public class TransactionOutput {
 	//the id of the transaction this output was created in
 	public String parentTransactionId; 
 	
-	public TransactionOutput(PublicKey reciepient, float value, String parentTrasactionId) {
+	public TransactionOutputs(PublicKey reciepient, float value, String parentTrasactionId) {
 		this.reciepient = reciepient;
 		this.value = value;
 		this.parentTransactionId = parentTrasactionId;

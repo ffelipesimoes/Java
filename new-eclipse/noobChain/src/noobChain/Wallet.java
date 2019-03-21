@@ -1,5 +1,8 @@
 package noobChain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 
@@ -7,6 +10,8 @@ import java.security.spec.ECGenParameterSpec;
 public class Wallet {
 	public PrivateKey privateKey;
 	public PublicKey publicKey;
+	
+	public HashMap<String,TransactionOutputs> UTXOs = new HashMap<String,TransactionOutputs>(); //only UTXOs owned by this wallet.
 	
 	public Wallet() {
 		generateKeyPair();
@@ -31,5 +36,40 @@ public class Wallet {
 			}
 	}
 	
-	
+	public float getBalance() {
+		float total = 0;	
+        for (Map.Entry<String, TransactionOutputs> item: NoobChain.UTXOs.entrySet()){
+        	TransactionOutputs UTXO = item.getValue();
+            if(UTXO.isMine(publicKey)) { //if output belongs to me ( if coins belong to me )
+            	UTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
+            	total += UTXO.value ; 
+            }
+        }  
+		return total;
+	}
+	//Generates and returns a new transaction from this wallet.
+		public Transaction sendFunds(PublicKey _recipient,float value ) {
+			if(getBalance() < value) { //gather balance and check funds.
+				System.out.println("#Not Enough funds to send transaction. Transaction Discarded.");
+				return null;
+			}
+	    //create array list of inputs
+			ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
+	    
+			float total = 0;
+			for (Map.Entry<String, TransactionOutputs> item: UTXOs.entrySet()){
+				TransactionOutputs UTXO = item.getValue();
+				total += UTXO.value;
+				inputs.add(new TransactionInput(UTXO.id));
+				if(total > value) break;
+			}
+			
+			Transaction newTransaction = new Transaction(publicKey, _recipient , value, inputs);
+			newTransaction.generateSignature(privateKey);
+			
+			for(TransactionInput input: inputs){
+				UTXOs.remove(input.transactionOutputId);
+			}
+			return newTransaction;
+		}
 }
