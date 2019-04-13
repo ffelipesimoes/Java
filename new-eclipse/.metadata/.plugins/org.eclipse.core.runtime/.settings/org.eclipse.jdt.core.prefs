@@ -8,3 +8,4 @@ org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
 org.eclipse.jdt.core.compiler.source=1.8
 org.eclipse.jdt.core.userLibrary.Gson_Lib=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="D\:/JAVA/java-libs/gson-2.6.2.jar"/>\r\n</userlibrary>\r\n
 org.eclipse.jdt.core.userLibrary.MySQLConnector=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="D\:/JAVA/java-libs/jdbc-connectors/mysql-connector-java-5.1.47.jar"/>\r\n</userlibrary>\r\n
+org.eclipse.jdt.core.userLibrary.bouncycastle_lib=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="D\:/JAVA/java-libs/bcprov-jdk15on-159.jar"/>\r\n</userlibrary>\r\n
