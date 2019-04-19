@@ -18,7 +18,7 @@
 		<property name="connection.password">tjce@123</property>
 
 		<!-- Pool de Conexões -->
-		<property name="connection.pool_size">1</property> 
+		<!-- property name="connection.pool_size">100</property> -->
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>

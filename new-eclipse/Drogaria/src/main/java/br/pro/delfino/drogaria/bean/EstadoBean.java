@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -19,10 +20,11 @@ public class EstadoBean implements Serializable {
 
 	private Estado estado;
 	private List<Estado> estados;
-	
+
 	public List<Estado> getEstados() {
 		return estados;
 	}
+
 	public void setEstados(List<Estado> estados) {
 		this.estados = estados;
 	}
@@ -34,16 +36,14 @@ public class EstadoBean implements Serializable {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
-	
+
 	@PostConstruct
 	public void listar() {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estados = estadoDAO.listar();
-			
-		}
-		catch(RuntimeException erro) {
+
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar o estado!");
 			erro.printStackTrace();
 		}
@@ -56,16 +56,47 @@ public class EstadoBean implements Serializable {
 	public void salvar() {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estadoDAO.salvar(estado);
+			estadoDAO.merge(estado);
 			novo();
-						
-		}
-		catch(RuntimeException erro) {
+			estados = estadoDAO.listar();
+
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar o estado!");
 			erro.printStackTrace();
 		}
-		
+
 		Messages.addGlobalInfo("Estado salvo com sucesso!");
+
+	}
+
+	public void excluir(ActionEvent evento) {
+		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.excluir(estado);
+			Messages.addGlobalInfo("Estado excluido com sucesso");
+			estados = estadoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao remover o estado!");
+			erro.printStackTrace();
+		}
+
+
+	}
+	public void editar(ActionEvent evento) {
+		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.editar(estado);
+			Messages.addGlobalInfo("Estado Editado com sucesso");
+			estados = estadoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao editar o estado!");
+			erro.printStackTrace();
+		}
+
 
 	}
 }
