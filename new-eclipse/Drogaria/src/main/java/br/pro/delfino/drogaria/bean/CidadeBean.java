@@ -66,7 +66,7 @@ public class CidadeBean implements Serializable {
 			cidade = new Cidade();
 
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			estados = estadoDAO.listar("nome");
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao criar a Cidade!");
@@ -83,7 +83,7 @@ public class CidadeBean implements Serializable {
 			novo();
 			cidades = CidadeDAO.listar();
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			estados = estadoDAO.listar("nome");
 			Messages.addGlobalInfo("Cidade salvo com sucesso!");
 
 		} catch (RuntimeException erro) {
@@ -114,7 +114,7 @@ public class CidadeBean implements Serializable {
 			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionado");
 	
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			estados = estadoDAO.listar("nome");
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar a Cidade!");
